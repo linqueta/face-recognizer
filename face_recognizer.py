@@ -26,9 +26,22 @@ def face_id(face):
 def list_face_ids(faces):
     return list(map(face_id, faces['FaceRecords']))
 
+def search_face(face_id):
+    return client.search_faces(
+        CollectionId=collection_name,
+        FaceId=face_id,
+        FaceMatchThreshold=80,
+        MaxFaces=10,
+    )
+
+def compare(face_ids):
+    return list(map(search_face, face_ids))
+
 def main():
     faces = recognize()
-    print(list_face_ids(faces))
+    face_ids = list_face_ids(faces)
+    compared = compare(face_ids)
+    print(json.dumps(compared, indent=4))
 
 if __name__ == "__main__":
     main()
