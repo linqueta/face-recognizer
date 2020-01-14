@@ -20,8 +20,15 @@ def recognize():
     )
     return recognized_faces
 
+def face_id(face):
+    return face['Face']['FaceId']
+
+def list_face_ids(faces):
+    return list(map(face_id, faces['FaceRecords']))
+
 def main():
-    print(json.dumps(recognize(), indent=4))
+    faces = recognize()
+    print(list_face_ids(faces))
 
 if __name__ == "__main__":
     main()
