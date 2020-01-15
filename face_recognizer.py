@@ -19,11 +19,8 @@ def recognize():
         },
     )
 
-def face_id(face):
-    return face['Face']['FaceId']
-
 def list_face_ids(faces):
-    return list(map(face_id, faces['FaceRecords']))
+    return list(map(lambda x: x['Face']['FaceId'], faces['FaceRecords']))
 
 def search_face(face_id):
     return client.search_faces(
