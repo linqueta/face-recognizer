@@ -33,11 +33,21 @@ def search_face(face_id):
 def compare(face_ids):
     return list(map(search_face, face_ids))
 
+def response_dict(payload):
+    return dict(
+        name=payload['Face']['ExternalImageId'],
+        faceMatch=round(payload['Similarity'])
+    )
+
+def handle(compared):
+    filtered = filter(lambda x: x['FaceMatches'], compared)
+    return list(map(lambda x: response_dict(x['FaceMatches'][0]), filtered))
+
 def main():
     faces = recognize()
     face_ids = list_face_ids(faces)
     compared = compare(face_ids)
-    print(json.dumps(compared, indent=4))
+    return handle(compared)
 
 if __name__ == "__main__":
     main()
