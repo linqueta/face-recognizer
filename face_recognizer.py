@@ -43,12 +43,12 @@ def handle(compared):
     filtered = filter(lambda x: x['FaceMatches'], compared)
     return list(map(lambda x: response_dict(x['FaceMatches'][0]), filtered))
 
-def main():
+def main(event, context):
     faces = recognize()
     face_ids = list_face_ids(faces)
     compared = compare(face_ids)
     handled = handle(compared)
-    return json.dumps(handled, indent=4)
+    return json.dumps(handled)
 
 if __name__ == "__main__":
-    main()
+    main(0, 0)
