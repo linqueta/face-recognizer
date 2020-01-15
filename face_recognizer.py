@@ -36,7 +36,7 @@ def compare(face_ids):
 def response_dict(payload):
     return dict(
         name=payload['Face']['ExternalImageId'],
-        faceMatch=round(payload['Similarity'])
+        faceMatch=round(payload['Similarity'], 2)
     )
 
 def handle(compared):
@@ -47,7 +47,8 @@ def main():
     faces = recognize()
     face_ids = list_face_ids(faces)
     compared = compare(face_ids)
-    return handle(compared)
+    handled = handle(compared)
+    return json.dumps(handled, indent=4)
 
 if __name__ == "__main__":
     main()
